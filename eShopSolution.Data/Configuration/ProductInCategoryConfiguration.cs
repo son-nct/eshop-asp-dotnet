@@ -13,6 +13,8 @@ namespace eShopSolution.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ProductInCategory> builder)
         {
+
+            builder.ToTable("ProductInCategories");
             //do bảng này là bảng nhiều nhiều nên ta cần phải configure hai khóa ngoại
             // của Category và Product ==> 2 PK làm 2 khóa ngoại
 

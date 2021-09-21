@@ -14,6 +14,8 @@ namespace eShopSolution.Data.Configuration
         public void Configure(EntityTypeBuilder<Order> builder)
         {
 
+            builder.ToTable("Orders");
+
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -30,7 +32,6 @@ namespace eShopSolution.Data.Configuration
 
             builder.Property(x => x.ShipPhoneNumber).IsRequired().HasMaxLength(200);
 
-            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
         }
     }
 }

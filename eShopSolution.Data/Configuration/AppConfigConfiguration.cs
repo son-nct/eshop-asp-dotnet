@@ -14,7 +14,7 @@ namespace eShopSolution.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<AppConfig> builder)
         {
-
+            builder.ToTable("AppConfigs");
             //has key ở đây là primary key
             builder.HasKey(x => x.Key);
             builder.Property(x => x.Value).IsRequired(true);

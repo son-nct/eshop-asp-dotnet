@@ -13,6 +13,7 @@ namespace eShopSolution.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+            builder.ToTable("Products");
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -22,9 +23,9 @@ namespace eShopSolution.Data.Configuration
 
             builder.Property(x => x.OriginalPrice).IsRequired();
 
-            builder.Property(x => x.Stock).IsRequired();
+            builder.Property(x => x.Stock).IsRequired().HasDefaultValue(0);
 
-            builder.Property(x => x.ViewCount).IsRequired();
+            builder.Property(x => x.ViewCount).IsRequired().HasDefaultValue(0);
         }
     }
 }

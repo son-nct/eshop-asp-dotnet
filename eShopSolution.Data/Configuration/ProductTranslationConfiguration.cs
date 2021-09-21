@@ -13,6 +13,8 @@ namespace eShopSolution.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ProductTranslation> builder)
         {
+            builder.ToTable("ProductTranslations");
+
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
