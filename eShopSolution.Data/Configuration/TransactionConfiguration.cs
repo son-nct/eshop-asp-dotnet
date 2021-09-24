@@ -20,6 +20,8 @@ namespace eShopSolution.Data.Configuration
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Transactions).HasForeignKey(x => x.UserId);
+
         }
     }
 }
