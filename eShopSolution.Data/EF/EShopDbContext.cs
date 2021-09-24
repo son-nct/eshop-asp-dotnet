@@ -1,5 +1,6 @@
 ﻿using eShopSolution.Data.Configuration;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,12 @@ namespace eShopSolution.Data.EF
 
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
+
+            modelBuilder.Seed();
         }
 
         public EShopDbContext(DbContextOptions options) : base(options)
-        {
+        { 
         }
 
         public DbSet<Product> Products { get; set; }

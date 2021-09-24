@@ -18,8 +18,8 @@ namespace eShopSolution.Data.EF
 
             //gắn file json appsetting vào
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsetting.json")
+                .SetBasePath(Directory.GetCurrentDirectory()) // chọn file hiên tại làm file gốc
+                .AddJsonFile("appsetting.json") // add file json setting vào để connection string
                 .Build();
 
             //tạo connectionstring
