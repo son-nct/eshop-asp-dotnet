@@ -10,6 +10,6 @@ namespace eShopSolution.Application.Catalog.Products.Dtos
 {
     public interface IPublicProductService
     {
-        Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PageResult<ProductViewModel>> GetAllByCategoryId(GetProductPagingRequest request);
     }
 }

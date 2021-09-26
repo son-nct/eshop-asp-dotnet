@@ -34,7 +34,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task AddViewCount (int productId); // mỗi lần tăng count lên 1
 
-        Task<bool> UpdateStock(int productId, decimal addedQuantity);
+        Task<bool> UpdateStock(int productId, int addedQuantity);
 
         Task<ProductViewModel> GetById(int productId, string languageId);
 
