@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.Application.Catalog.Dtos
+namespace eShopSolution.ViewModels.Catalog.Common
 {
 
     // class này để dùng chung thể hiện các detail phân trang
