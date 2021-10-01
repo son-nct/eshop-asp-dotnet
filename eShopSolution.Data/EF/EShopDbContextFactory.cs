@@ -15,12 +15,17 @@ namespace eShopSolution.Data.EF
     {
         public EShopDbContext CreateDbContext(string[] args)
         {
+            //Ctrl + k + c để comment block code
+            // Ctrl + k + u để gỡ cmt block code
 
-            //gắn file json appsetting vào
+            //gắn file json appsetting vào thư mục context factory hiện tại
+            //directory: danh mục
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory()) // chọn file hiên tại làm file gốc
+                .SetBasePath(Directory.GetCurrentDirectory()) // đặt đường dẫn cơ sở là thư mục hiện tại
                 .AddJsonFile("appsetting.json") // add file json setting vào để connection string
                 .Build();
+
+
 
             //tạo connectionstring
             var connectionString = configurationRoot.GetConnectionString("eShopSolutionDb");
