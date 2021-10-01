@@ -14,6 +14,7 @@ namespace eShopSolution.Application.Common
         private readonly string _userContentFolder;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
+
         public FileStorageService(IWebHostEnvironment webHostEnvironment)
         {
             //gắn đường dẫn root vào _userContentFolder
@@ -30,9 +31,15 @@ namespace eShopSolution.Application.Common
 
         public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)
         {
+
             //combine gắn _usercontentFoleder và fileName thành  1 string ten filePath
+            // lấy ra đường dẫn tuyệt đối của fileName
             var filePath = Path.Combine(_userContentFolder, fileName);
+
+            //tạo ra 1 file ở đường dẫn chỉ định
             using var output = new FileStream(filePath, FileMode.Create);
+
+            //sao chép mediabinayStream tới đường dẫn chỉ định là filePath
             await mediaBinaryStream.CopyToAsync(output);
 
         }
@@ -40,8 +47,10 @@ namespace eShopSolution.Application.Common
         public async Task DeleteFileAsync(string fileName)
         {
             var filePath = Path.Combine(_userContentFolder, fileName);
+
             if (File.Exists(filePath))
             {
+                //() dấu này là tạo 1 hành động
                 await Task.Run(() => File.Delete(filePath));
             }
         }

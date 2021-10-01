@@ -1,6 +1,5 @@
 ﻿using eShopSolution.ViewModels.Catalog.Common;
 using eShopSolution.ViewModels.Catalog.Products;
-using eShopSolution.ViewModels.Catalog.Products.Manage;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -47,7 +46,7 @@ namespace eShopSolution.Application.Catalog.Products
                 + và 1 list categoryId
         */
 
-        Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
         Task<int> AddImages(int productId, List<IFormFile> files);
 

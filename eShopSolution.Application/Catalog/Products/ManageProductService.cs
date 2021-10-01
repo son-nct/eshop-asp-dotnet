@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using EShopSolution.Utilities.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using eShopSolution.ViewModels.Catalog.Products.Manage;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.Common;
 using Microsoft.AspNetCore.Http;
@@ -86,6 +85,7 @@ namespace eShopSolution.Application.Catalog.Products
                 };
             }
 
+
             _context.Products.Add(product);
             return await _context.SaveChangesAsync();
 
@@ -149,7 +149,7 @@ namespace eShopSolution.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request)
+        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
 
             // 1.select join
@@ -261,11 +261,19 @@ namespace eShopSolution.Application.Catalog.Products
             return await _context.SaveChangesAsync() > 0;
         }
 
+        //này dùng để upload file 
+        // trả về đường dẫn của file đó
         private async Task<String> SaveFile(IFormFile file)
         {
             //ContentDispositionHeaderValue working with fileUpload and download
+
+            //lấy tên fileUload
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim();
+
+            //add guid vào tên file để tránh bị trùng
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+
+            //sau đó lưu file vào đường dẫn root
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
             return fileName;
         }

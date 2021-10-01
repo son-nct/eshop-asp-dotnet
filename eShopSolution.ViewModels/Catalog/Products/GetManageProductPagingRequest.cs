@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.ViewModels.Catalog.Products.Manage
+namespace eShopSolution.ViewModels.Catalog.Products
 {
-    // class này sẽ extend class PageingRequestBase để thừa kế lại thuộc tính pageIndex và pageSize
-    public class GetProductPagingRequest : PageingRequestBase
+    public class GetManageProductPagingRequest : PageingRequestBase
     {
 
         //định nghĩa thêm trường keyword
