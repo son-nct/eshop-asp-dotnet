@@ -1,3 +1,4 @@
+using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Catalog.Products.Dtos;
 using eShopSolution.Application.Catalog.Products.Impl;
 using eShopSolution.Data.EF;
@@ -33,8 +34,11 @@ namespace eShopSolution.BackendAPI
 
             //Declare DI
             services.AddTransient<IPublicProductService, PublicProductService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
 
             services.AddControllersWithViews();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +59,20 @@ namespace eShopSolution.BackendAPI
 
             app.UseRouting();
 
+
             app.UseAuthorization();
+
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger eShopSolution V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {
