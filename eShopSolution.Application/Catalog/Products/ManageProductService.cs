@@ -323,6 +323,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
         {
+
             var productImage = new ProductImage()
             {
                 Caption = request.Caption,
@@ -339,12 +340,13 @@ namespace eShopSolution.Application.Catalog.Products
             }
 
             _context.ProductImages.Add(productImage);
-            return await _context.SaveChangesAsync();
-
+             await _context.SaveChangesAsync();
+            return productImage.Id;
         }
 
-        public async Task<int> RemoveImage(int productId, int imageId)
+        public async Task<int> RemoveImage( int imageId)
         {
+
             var productImage = await _context.ProductImages.FindAsync(imageId);
             if (productImage == null)
             {
@@ -377,6 +379,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<List<ProductImageViewModel>> GetListImages(int productId)
         {
+
             return await _context.ProductImages.Where(x => x.ProductId == productId)
                 .Select(x => new ProductImageViewModel()
                 {
@@ -389,6 +392,30 @@ namespace eShopSolution.Application.Catalog.Products
                     ProductId = x.ProductId,
                     SortOrder = x.SortOrder
                 }).ToListAsync();
+        }
+
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
+        {
+            var image = await _context.ProductImages.FindAsync(imageId);
+
+            if(image == null)
+            {
+                throw new EShopException($"Not found image {imageId}");
+            }
+
+            var imageViewModel = new ProductImageViewModel()
+            {
+                Caption = image.Caption,
+                DateCreated = image.DateCreated,
+                FileSize = image.FileSize,
+                ImagePath = image.ImagePath,
+                Id = image.Id,
+                IsDefault = image.IsDefault,
+                ProductId = image.ProductId,
+                SortOrder = image.SortOrder,
+            };
+
+            return imageViewModel;
         }
     }
 }

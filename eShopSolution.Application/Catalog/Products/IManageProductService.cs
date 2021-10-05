@@ -52,11 +52,15 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<int> AddImage(int productId, ProductImageCreateRequest productImage);
 
-        Task<int> RemoveImage(int productId, int imageId);
+        Task<int> RemoveImage(int imageId);
 
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest productImage);
 
+        Task<ProductImageViewModel> GetImageById(int imageId);
+
         Task<List<ProductImageViewModel>> GetListImages(int productId);
+
+
 
     }
 }

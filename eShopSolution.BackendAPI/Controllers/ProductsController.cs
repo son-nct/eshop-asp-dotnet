@@ -1,5 +1,6 @@
 ﻿using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Catalog.Products.Dtos;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,10 +29,10 @@ namespace eShopSolution.BackendAPI.Controllers
         {
             _publicProductService = publicProductService;
             _manageProductService = manageProductService;
-            
+
         }
 
-        
+
         // http://localhost:port/products?pageIndex=1&pageSize=10&CategoryId=?
         [HttpGet("{languageId}")] // đặt bị danh cho url để ko bị trùng
 
@@ -40,10 +41,10 @@ namespace eShopSolution.BackendAPI.Controllers
         */
 
 
-        public async Task<IActionResult> GetAllPaging(String languageId,[FromQuery] GetPublicProductPagingRequest request)
+        public async Task<IActionResult> GetAllPaging(String languageId, [FromQuery] GetPublicProductPagingRequest request)
         {
 
-            var products = await _publicProductService.GetAllByCategoryId(languageId,request);
+            var products = await _publicProductService.GetAllByCategoryId(languageId, request);
             return Ok(products);
         }
 
@@ -51,7 +52,7 @@ namespace eShopSolution.BackendAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -87,7 +88,7 @@ namespace eShopSolution.BackendAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -123,6 +124,74 @@ namespace eShopSolution.BackendAPI.Controllers
             {
                 return BadRequest();
             }
+            return Ok();
+        }
+
+        [HttpPost("{productId}/images")]
+        public async Task<IActionResult>createImage(int productId,[FromForm] ProductImageCreateRequest request)
+        {   
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var imageId = await  _manageProductService.AddImage(productId,request);
+
+            if(imageId == 0)
+            {
+                return BadRequest();
+            }
+
+            var image = _manageProductService.GetImageById(imageId);
+
+            return CreatedAtAction(nameof(getImageById), new { id = imageId }, image);
+            //tất cả hàm post nên trả về 201 là Created
+
+            return Ok();
+        }
+       
+        [HttpGet("{productId}/images/{imageId}")]
+        public async Task<IActionResult> getImageById(int productId,int imageId)
+        {
+            var image = await _manageProductService.GetImageById(imageId);
+
+            if(image == null)
+            {
+                return BadRequest(); 
+            }
+
+            return Ok(image);
+        }
+
+        [HttpPut("{productId}/images/{imageId}")]
+        public async Task<IActionResult> updateImage(int imageId, ProductImageUpdateRequest request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _manageProductService.UpdateImage(imageId, request);
+
+            if(result == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete("{productId}/images/{imageId}")]
+        public async Task<IActionResult> removeImage(int imageId, ProductImageUpdateRequest request)
+        {
+
+            var result = await _manageProductService.RemoveImage(imageId);
+
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
     }
