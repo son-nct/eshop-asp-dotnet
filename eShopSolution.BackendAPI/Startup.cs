@@ -1,19 +1,15 @@
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Catalog.Products.Dtos;
 using eShopSolution.Application.Catalog.Products.Impl;
+using eShopSolution.Application.Common;
 using eShopSolution.Data.EF;
 using EShopSolution.Utilities.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eShopSolution.BackendAPI
 {
@@ -33,6 +29,8 @@ namespace eShopSolution.BackendAPI
             services.AddDbContext<EShopDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
             //Declare DI
+
+            services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IPublicProductService, PublicProductService>();
             services.AddTransient<IManageProductService, ManageProductService>();
 
