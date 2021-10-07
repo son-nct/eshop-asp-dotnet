@@ -19,6 +19,8 @@ namespace eShopSolution.Application.System.Users
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
 
+
+
         public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IConfiguration config)
         {
             _userManager = userManager;
@@ -33,6 +35,7 @@ namespace eShopSolution.Application.System.Users
         // Tìm phần Listing 5: The Token Service copy đoạn mã hóa claim
         public async Task<String> Authenticate(LoginRequest request)
         {
+           
             var user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user == null)
@@ -75,6 +78,8 @@ namespace eShopSolution.Application.System.Users
 
         public async Task<bool> Register(RegisterRequest request)
         {
+            
+
             var user = new AppUser()
             {
                 UserName = request.UserName,

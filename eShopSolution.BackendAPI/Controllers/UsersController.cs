@@ -23,6 +23,7 @@ namespace eShopSolution.BackendAPI.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous] // chưa đăng nhập vẫn có thể dc gọi hàm này
+
         public async Task<IActionResult>Authenticate([FromForm] LoginRequest request)
         {
 
@@ -39,6 +40,7 @@ namespace eShopSolution.BackendAPI.Controllers
             }
 
             //trả về cái token
+
             return Ok(new { token = resultToken });
         }
 
