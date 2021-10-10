@@ -35,7 +35,6 @@ namespace eShopSolution.Application.System.Users
         // Tìm phần Listing 5: The Token Service copy đoạn mã hóa claim
         public async Task<String> Authenticate(LoginRequest request)
         {
-           
             var user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user == null)
@@ -61,6 +60,7 @@ namespace eShopSolution.Application.System.Users
                 new Claim(ClaimTypes.Role, String.Join(";",roles))
             };
 
+
             //mã hóa claim = symmetric(đối xứng)
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -78,7 +78,7 @@ namespace eShopSolution.Application.System.Users
 
         public async Task<bool> Register(RegisterRequest request)
         {
-            
+
 
             var user = new AppUser()
             {
@@ -91,7 +91,7 @@ namespace eShopSolution.Application.System.Users
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 return true;
             }

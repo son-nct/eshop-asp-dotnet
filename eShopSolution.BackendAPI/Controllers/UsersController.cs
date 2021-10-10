@@ -1,17 +1,16 @@
 ﻿using eShopSolution.Application.System.Users;
 using eShopSolution.ViewModels.System;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace eShopSolution.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -23,6 +22,7 @@ namespace eShopSolution.BackendAPI.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous] // chưa đăng nhập vẫn có thể dc gọi hàm này
+
 
         public async Task<IActionResult>Authenticate([FromForm] LoginRequest request)
         {
@@ -45,6 +45,7 @@ namespace eShopSolution.BackendAPI.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> register([FromForm] RegisterRequest request)
         { 
             if (!ModelState.IsValid)

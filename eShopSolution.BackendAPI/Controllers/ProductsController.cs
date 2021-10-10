@@ -2,6 +2,7 @@
 using eShopSolution.Application.Catalog.Products.Dtos;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace eShopSolution.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] 
     public class ProductsController : ControllerBase
     {
         /*tiêm thằng interface vào để gọi các abstract method
@@ -70,7 +72,7 @@ namespace eShopSolution.BackendAPI.Controllers
         }
 
 
-        // http:localhost:port/product/productId/languageId
+        // http:localhost:port/products/productId/languageId
         [HttpGet("{productId}/{languageId}")]
         public async Task<IActionResult> GetById(int productId, String languageId)
         {
@@ -127,6 +129,19 @@ namespace eShopSolution.BackendAPI.Controllers
             return Ok();
         }
 
+        [HttpPatch("stock/{productId}/{newStock}")]
+        public async Task<IActionResult> updateStock (int productId, int newStock)
+        {
+            bool isSuccessful = await _manageProductService.UpdateStock(productId, newStock);
+            if(!isSuccessful)
+            {
+                return BadRequest();
+            }else
+            {
+                return Ok();
+            }
+        }
+
         [HttpPost("{productId}/images")]
         public async Task<IActionResult>createImage(int productId,[FromForm] ProductImageCreateRequest request)
         {   
@@ -150,6 +165,7 @@ namespace eShopSolution.BackendAPI.Controllers
             return Ok();
         }
        
+        // https://localhost:port/products/productId/images/imageId
         [HttpGet("{productId}/images/{imageId}")]
         public async Task<IActionResult> getImageById(int productId,int imageId)
         {
@@ -180,6 +196,8 @@ namespace eShopSolution.BackendAPI.Controllers
 
             return Ok();
         }
+
+     
 
         [HttpDelete("{productId}/images/{imageId}")]
         public async Task<IActionResult> removeImage(int imageId, ProductImageUpdateRequest request)

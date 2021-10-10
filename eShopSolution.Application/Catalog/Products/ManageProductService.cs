@@ -247,6 +247,7 @@ namespace eShopSolution.Application.Catalog.Products
                 throw new EShopException($"Not found product {productId}");
             }
 
+            
             var categories = await (from c in _context.Categories
                                     join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
                                     join pic in _context.ProductInCategories on ct.CategoryId equals pic.CategoryId
