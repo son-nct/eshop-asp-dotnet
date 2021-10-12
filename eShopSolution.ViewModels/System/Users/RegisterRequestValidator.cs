@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace eShopSolution.ViewModels.System
+namespace eShopSolution.ViewModels.System.Users
 {
     public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {
@@ -31,14 +27,13 @@ namespace eShopSolution.ViewModels.System
                 .MinimumLength(6).WithMessage("Password must at least 6 characters");
 
             //custom Validator xem ở https://docs.fluentvalidation.net/en/latest/custom-validators.html
-            RuleFor(x => x).Custom((request, context) => {
+            RuleFor(x => x).Custom((request, context) =>
+            {
                 if (request.Password != request.ConfirmPassword)
                 {
                     context.AddFailure("Confirm password is not match");
                 }
             });
-
-
         }
     }
 }

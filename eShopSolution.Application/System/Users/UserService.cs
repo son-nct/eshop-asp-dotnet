@@ -1,5 +1,5 @@
 ﻿using eShopSolution.Data.Entities;
-using eShopSolution.ViewModels.System;
+using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -13,13 +13,10 @@ namespace eShopSolution.Application.System.Users
 {
     public class UserService : IUserService
     {
-
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
-
-
 
         public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IConfiguration config)
         {
@@ -29,8 +26,7 @@ namespace eShopSolution.Application.System.Users
             _config = config;
         }
 
-
-        // Login with JWT => JSON WEB TOKEN 
+        // Login with JWT => JSON WEB TOKEN
         // Link tham khảo : https://www.codemag.com/Article/2105051/Implementing-JWT-Authentication-in-ASP.NET-Core-5
         // Tìm phần Listing 5: The Token Service copy đoạn mã hóa claim
         public async Task<String> Authenticate(LoginRequest request)
@@ -60,8 +56,8 @@ namespace eShopSolution.Application.System.Users
                 new Claim(ClaimTypes.Role, String.Join(";",roles))
             };
 
-
             //mã hóa claim = symmetric(đối xứng)
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -73,13 +69,10 @@ namespace eShopSolution.Application.System.Users
 
             //trả về cái token đử api sử dụng
             return new JwtSecurityTokenHandler().WriteToken(token);
-
         }
 
         public async Task<bool> Register(RegisterRequest request)
         {
-
-
             var user = new AppUser()
             {
                 UserName = request.UserName,

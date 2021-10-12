@@ -5,7 +5,7 @@ using eShopSolution.Application.Common;
 using eShopSolution.Application.System.Users;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
-using eShopSolution.ViewModels.System;
+using eShopSolution.ViewModels.System.Users;
 using EShopSolution.Utilities.Constants;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -113,6 +113,7 @@ namespace eShopSolution.BackendAPI
             });
 
             //add authentication
+            // search register jwt bearer in asp.netcore
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -135,6 +136,8 @@ namespace eShopSolution.BackendAPI
 
                     };
                 });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -172,9 +175,6 @@ namespace eShopSolution.BackendAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger eShopSolution V1");
                 c.RoutePrefix = string.Empty;
-
-
-
             });
 
 
