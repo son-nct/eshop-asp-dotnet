@@ -1,5 +1,5 @@
 ﻿using eShopSolution.Application.System.Users;
-using eShopSolution.ViewModels.System;
+using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,7 +24,7 @@ namespace eShopSolution.BackendAPI.Controllers
         [AllowAnonymous] // chưa đăng nhập vẫn có thể dc gọi hàm này
 
 
-        public async Task<IActionResult>Authenticate([FromForm] LoginRequest request)
+        public async Task<IActionResult>Authenticate([FromBody] LoginRequest request)
         {
 
             if(!ModelState.IsValid)
@@ -32,21 +32,22 @@ namespace eShopSolution.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var resultToken = await _userService.Authenticate(request);
+            var result = await _userService.Authenticate(request);
 
-            if(String.IsNullOrEmpty(resultToken))
+
+            if(String.IsNullOrEmpty(result))
             {
                 return BadRequest("Username or password is incorrect !");
             }
 
             //trả về cái token
 
-            return Ok(new { token = resultToken });
+            return Ok(result);
         }
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> register([FromForm] RegisterRequest request)
+        public async Task<IActionResult> register([FromBody] RegisterRequest request)
         { 
             if (!ModelState.IsValid)
             {
@@ -60,7 +61,7 @@ namespace eShopSolution.BackendAPI.Controllers
                 return BadRequest("Register is unsuccessful !");
             }
 
-            return Ok();
+            return Ok(result);
         }
     }
 }
